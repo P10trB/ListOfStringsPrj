@@ -11,14 +11,13 @@ public class ListOfStrings {
         return string.length == 0;
     }
     public boolean contains(String o) {
-        if (string.length > 0) {
+        if (string != null) {
             for (int i = 0; i < string.length; i++)
                 if (o.equals(string[i])){
                     idx = i;
                     return true;
                 }
         } else {
-            System.out.println("Lista jest pusta");
             idx = -1;
         }
         return false;
@@ -36,26 +35,37 @@ public class ListOfStrings {
         }
         return true;
     }
-    public void add(int index, String element){
-        if (string != null && index < string.length) {
-            String[] tmpArray = new String[string.length + 1];
-            int tmp = 0;
-            for(int i = 0; i < string.length; i++){
+    public void add(int index, String element){         //naprawione
+        String tmpArray[] = new String[string.length + 1];
+        if (outOfBounds(index)) return;
+        if (string != null && index < tmpArray.length) {
+            int tempIndex = 0;
+            for(int i = 0; i < tmpArray.length; i++){
                 if(i == index) {
-                    tmpArray[tmp] = element;
-                    tmp++;
+                    tmpArray[i] = element;
                 }
-                else
-                    tmpArray[tmp] = string[i];
-                tmp++;
+                else{
+                    tmpArray[i] = string[tempIndex];
+                    tempIndex++;
+                }
             }
+            string = tmpArray;
         }
-        else if(index > 0){
+        else if(index > 0 && index <  string.length){
             System.out.println("The list was empty, cannot add at specified index, adding first element to the list.");
             string = new String[1];
             string[0] = element;
         }
     }
+
+    private boolean outOfBounds(int index) {
+        if(index >= string.length || index < 0) {           //check if index out of bounds
+            System.out.println("Index out of bounds!");
+            return true;
+        }
+        return false;
+    }
+
     public boolean addAll(String[] list){
         String[] tmpArr = new String[string.length + list.length];
         int index = 0;
@@ -94,7 +104,7 @@ public class ListOfStrings {
         }
         string = c;
         return true;
-    }
+    }       //w trakcie naprawiania
     public boolean remove(String o) {
         if (string == null) {
             System.out.println("List is empty.");
@@ -120,9 +130,10 @@ public class ListOfStrings {
                     tmpArr[tmpIndex] = el;
                     tmpIndex++;
                 }
+            string = tmpArr;
             return true;
         }
-    }
+    }       //naprawione
     public void clear() {
         string = null;
     }
@@ -151,8 +162,7 @@ public class ListOfStrings {
 
     @Override
     public String toString() {
-        return "ListOfStrings{" +
-                "string=" + Arrays.toString(string) +
+        return "The list contains:{" + Arrays.toString(string) +
                 '}';
     }
 }

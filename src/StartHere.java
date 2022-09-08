@@ -1,40 +1,28 @@
 public class StartHere {
     public static void main(String[] args) {
         ListOfStrings list = new ListOfStrings();
-        String test1 = "To jest test 1";
-        String test2 = "A to jest test 2";
-        String[] test3 = {"To jest index 0 tablicy testowej","To jest index 1 tablicy testowej"};
+        String test = "Testowy string nr 1";
         print(list);
-        list.add(test1);
+        list.add(test);
+        list.add("Pierwszy element");
+        list.add(5,"Testujemy metode wstawiania pod indeks");
+        list.add(1,"Testujemy metode wstawiania pod indeks");
         print(list);
-        list.addAll(test3);
+        //list.clear();                          test passed
+        //print(list);
+        System.out.println(list.get(1));
+        String[] list2 = {"Fill 1","Fill 2","Fill 3","Fill 4","Fill 5","Fill 6","Fill 7",};
+        list.addAll(list2);                     //test passed
+        //list.addAll(3,list2);
+        list.remove("Fill 3");               //test passed
         print(list);
-        list.remove("st1");
+        list.set(1,"ELEMENT REPLACED");         //test passed
         print(list);
-        list.remove(test1);
-        print(list);
-        list.addAll(2, test3);
-        print(list);
-        String[] tablica = list.toArray();
-        for (String e : tablica) System.out.println(e + " ");
-        print(list);
-        list.clear();
-        print(list);
-        System.out.println("-----");
-        list.add(test2);
-        list.add(0,test2);
-        list.add(2, test1);
-        print(list);
-        System.out.println("--------");
-        list.addAll(1,test3);
-        list.addAll(test3);
-        print(list);
-        System.out.println(list.get(2));
-        if (list.contains(test2)) System.out.println("element jest na liscie");
+        if (list.contains(test)) System.out.println("element jest na liscie");
         else System.out.println("nie ma takiego elementu");
     }
 
     private static void print(ListOfStrings list) {
-        System.out.println("Zawartosc listy " + list.toString());
+        System.out.println(list.toString());
     }
 }
