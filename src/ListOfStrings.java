@@ -28,7 +28,7 @@ public class ListOfStrings {
             String[] tmpArray = new String[string.length + 1];
             for (int i = 0; i < string.length; i++)
                 tmpArray[i] = string[i];
-            tmpArray[string.length + 1] = o;
+            tmpArray[string.length] = o;
             string = tmpArray;
         } else {
             string = new String[1];
@@ -37,7 +37,7 @@ public class ListOfStrings {
         return true;
     }
     public void add(int index, String element){
-        if (string != null) {
+        if (string != null && index < string.length) {
             String[] tmpArray = new String[string.length + 1];
             int tmp = 0;
             for(int i = 0; i < string.length; i++){
@@ -73,8 +73,9 @@ public class ListOfStrings {
     public boolean addAll(int index, String[] c){
         int tmp1,tmp2;
         tmp1 = tmp2 = 0;
+        String[] tmpArr;
         if (string != null) {
-            String[] tmpArr = new String[string.length + c.length];
+            tmpArr = new String[string.length + c.length];
             for(int i = 0; i < string.length; i++){
                 if(i >= index && i < c.length){
                     tmpArr[tmp1] = c[tmp2];
@@ -101,20 +102,21 @@ public class ListOfStrings {
         }
         boolean exists = false;
         idx = -1;
-        for (int i = 0; i < string.length; i++) {
-            if (string[i] == o) exists = true;
-            idx = i;
-            break;
+        for (int i = 0; i < string.length; i++) {   //Find first occurrence of specified element.
+            if (string[i].equals(o)) {
+                exists = true;                      //if found set this boolean value to true.
+                idx = i;                            //and set variable idx to the index of found element.
+                break;
+            }
         }
         if (!exists) {
             System.out.println("List doesn't contain specified element.");
             return false;
         } else {
-            //zrob nowy array i usun to dziadostwo
             String[] tmpArr = new String[string.length - 1];
             int tmpIndex = 0;
             for (String el : string)
-                if (el != o) {
+                if (!el.equals(o)) {
                     tmpArr[tmpIndex] = el;
                     tmpIndex++;
                 }

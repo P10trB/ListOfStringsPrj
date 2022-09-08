@@ -20,9 +20,12 @@ public class StartHere {
         print(list);
         list.clear();
         print(list);
+        System.out.println("-----");
+        list.add(test2);
         list.add(0,test2);
-        list.add(1, test1);
+        list.add(2, test1);
         print(list);
+        System.out.println("--------");
         list.addAll(1,test3);
         list.addAll(test3);
         print(list);
