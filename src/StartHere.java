@@ -5,9 +5,9 @@ public class StartHere {
         print(list);
         list.add(test);
         list.add("Pierwszy element");
-        list.add(5,"Testujemy metode wstawiania pod indeks");
+        list.add(5,"Testujemy metode wstawiania pod innnndeks");
         list.clear();                          //test passed
-        list.add(1,"Testujemy metode wstawiania pod indeks");
+        list.add(1,"Testujemy metode wstawiania pod indeksssss");
         print(list);
         System.out.println(list.get(1));
         String[] list2 = {"Fill 1","Fill 2","Fill 3"};
