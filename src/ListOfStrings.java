@@ -5,13 +5,11 @@ public class ListOfStrings {
     private int idx = -1;
 
     public int size() {
-        return string.length;
-    }
-    public boolean isEmpty() {
-        return string.length == 0;
+        if(listNotEmpty()) return string.length;
+        return 0;
     }
     public boolean contains(String o) {
-        if (string != null) {
+        if (listNotEmpty()) {
             for (int i = 0; i < string.length; i++)
                 if (o.equals(string[i])){
                     idx = i;
@@ -22,23 +20,21 @@ public class ListOfStrings {
         }
         return false;
     }
-    public boolean add(String o) {
-        if (string != null) {
+    public void add(String o) {
+        if (listNotEmpty()) {
             String[] tmpArray = new String[string.length + 1];
-            for (int i = 0; i < string.length; i++)
-                tmpArray[i] = string[i];
+            System.arraycopy(string, 0, tmpArray, 0, string.length);
             tmpArray[string.length] = o;
             string = tmpArray;
         } else {
             string = new String[1];
             string[0] = o;
         }
-        return true;
     }
-    public void add(int index, String element){         //naprawione
-        String tmpArray[] = new String[string.length + 1];
-        if (outOfBounds(index)) return;
-        if (string != null && index < tmpArray.length) {
+    public void add(int index, String element){         //prawdopodobnie naprawione w koncu
+        String[] tmpArray;
+        if ((listNotEmpty()) && (!outOfBounds(index))) {
+            tmpArray = new String[string.length + 1];
             int tempIndex = 0;
             for(int i = 0; i < tmpArray.length; i++){
                 if(i == index) {
@@ -51,7 +47,7 @@ public class ListOfStrings {
             }
             string = tmpArray;
         }
-        else if(index > 0 && index <  string.length){
+        else if(!listNotEmpty()){
             System.out.println("The list was empty, cannot add at specified index, adding first element to the list.");
             string = new String[1];
             string[0] = element;
@@ -59,14 +55,16 @@ public class ListOfStrings {
     }
 
     private boolean outOfBounds(int index) {
-        if(index >= string.length || index < 0) {           //check if index out of bounds
-            System.out.println("Index out of bounds!");
-            return true;
+        if(listNotEmpty()) {
+            if (index >= string.length || index < 0) {           //check if index out of bounds
+                System.out.printf("Index %d is out of bounds!\n", index);
+                return true;
+            }
         }
         return false;
     }
 
-    public boolean addAll(String[] list){
+    public void addAll(String[] list){
         String[] tmpArr = new String[string.length + list.length];
         int index = 0;
         for(String el : string){
@@ -78,37 +76,37 @@ public class ListOfStrings {
             index++;
         }
         string = tmpArr;
-        return true;
     }
-    public boolean addAll(int index, String[] c){
-        int tmp1,tmp2;
-        tmp1 = tmp2 = 0;
+    private boolean listNotEmpty(){
+        return string != null;
+    }
+    public void addAll(int cIndex, String[] c){
         String[] tmpArr;
-        if (string != null) {
+        if(outOfBounds(cIndex)){
+            return;
+        }
+        if ((listNotEmpty()) && (!outOfBounds(cIndex)))  {
             tmpArr = new String[string.length + c.length];
-            for(int i = 0; i < string.length; i++){
-                if(i >= index && i < c.length){
-                    tmpArr[tmp1] = c[tmp2];
-                    tmp1++;
-                    tmp2++;
-                }
-                else{
-                    tmpArr[tmp1] = string[i];
-                    tmp1++;
-                }
+            int stringIndex = 0;
+            for (int i = 0; i < tmpArr.length; i++) {
+                    if(cIndex == i){
+                        for (int j = 0; j < c.length; j++,i++) {
+                            tmpArr[i] = c[j];
+                        }
+                    }
+                    tmpArr[i] = string[stringIndex++];
             }
             string = tmpArr;
         }
-        else if(index > 0){
-            System.out.println("The list was empty, cannot add at specified index, adding new elements to the list.");
+        else if(!listNotEmpty()){
+            System.out.println("The list was empty, adding new list.");
+            string = c;
         }
-        string = c;
-        return true;
     }       //w trakcie naprawiania
-    public boolean remove(String o) {
+    public void remove(String o) {
         if (string == null) {
             System.out.println("List is empty.");
-            return false;
+            return;
         }
         boolean exists = false;
         idx = -1;
@@ -121,7 +119,6 @@ public class ListOfStrings {
         }
         if (!exists) {
             System.out.println("List doesn't contain specified element.");
-            return false;
         } else {
             String[] tmpArr = new String[string.length - 1];
             int tmpIndex = 0;
@@ -131,7 +128,6 @@ public class ListOfStrings {
                     tmpIndex++;
                 }
             string = tmpArr;
-            return true;
         }
     }       //naprawione
     public void clear() {
@@ -148,16 +144,8 @@ public class ListOfStrings {
             return null;
         }
     }
-    public int indexOf(String o){
-        if(contains(o)) return idx;
-        return -1;
-    }
-    public String set(int index, String element){
+    public void set(int index, String element){
         string[index] = element;
-        return element;
-    }
-    public String[] toArray(){
-        return string;
     }
 
     @Override
