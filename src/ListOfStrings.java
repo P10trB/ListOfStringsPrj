@@ -150,7 +150,7 @@ public class ListOfStrings {
 
     @Override
     public String toString() {
-        return "The list contains:{" + Arrays.toString(string) +
+        return "The list contains: {" + Arrays.toString(string) +
                 '}';
     }
 }
