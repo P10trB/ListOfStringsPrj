@@ -98,7 +98,7 @@ public class StringList {
         }
     }
     public void remove(String o) {
-        if (listOfStrings == null) {
+        if (!listNotEmpty()) {
             System.out.println("List is empty.");
             return;
         }
