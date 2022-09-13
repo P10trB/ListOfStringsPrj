@@ -1,3 +1,5 @@
+package Stuff.StringList;
+
 import java.util.Arrays;
 public class StringList {
     private String[] listOfStrings = null;
